@@ -305,6 +305,7 @@ sudo make install
 echo "# <<< Beagle-lib-3.1.2 >>> #" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/beagle/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
 echo "export PKG_CONFIG_PATH=/usr/local/beagle/lib/pkgconfig:$PKG_CONFIG_PATH" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ### 2.4 Install Openmpi
@@ -320,6 +321,7 @@ echo "# <<< Openmpi-4.1.5 >>> #" >> ~/.bashrc
 echo "export PATH=/usr/local/openmpi/bin:$PATH" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=/usr/local/openmpi/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
 echo "export MANPATH=/usr/local/openmpi/share/man:$MANPATH" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 - Verify installation, Runs on 4 CPU cores: `mpirun -np 4`
