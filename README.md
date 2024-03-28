@@ -250,3 +250,110 @@ Built on Wed_Sep_21_10:33:58_PDT_2022
 Cuda compilation tools, release 11.8, V11.8.89
 Build cuda_11.8.r11.8/compiler.31833905_0
 ```
+### 2.3 Install Beagle-lib
+- According to Mrbayes' INSTALL file, MrBayes uses the Beagle library if it is available.  It will make use of release 3.1.2 of Beagle but should also work with release 2.1.3 of the library. So i downloaded Beagle-3.1.2.
+```bash
+git clone --branch=v3.1.2 --depth=1 \
+	'https://github.com/beagle-dev/beagle-lib.git'
+```
+
+- Enter Beagle-lib
+```bash
+cd beagle-lib
+```
+
+- Run the ./autogen.sh file
+```bash
+./autogen.sh
+```
+
+- After running the ./autogen.sh file, the configure file will be generated, but the corresponding NVIDIA architectures need to be modified.
+- First check the NVIDIA architectures in the default configure file. The output result defaults to `NVCCFLAGS="-O3 -arch compute_30"`
+```bash
+grep 'NVCCFLAGS="-O3 -arch compute_' configure
+```
+
+- Next, you need to modify the corresponding architecture. The architecture of the RTX4060 graphics card is Ada, which corresponds to compute_89.
+```
+NVCCFLAGS="-O3 -arch compute_30"
+```
+
+- modify to
+```
+NVCCFLAGS="-O3 -arch compute_89"
+```
+
+- You can use the following commands to modify it, or you can use vim or other text editors to modify it.
+```bash
+sed -i 's/NVCCFLAGS="-O3 -arch compute_30"/NVCCFLAGS="-O3 -arch compute_89"/g' configure
+```
+
+- Before executing this command, please make sure you have sufficient permissions to modify the configure file. If not, you may need to use sudo to obtain the necessary permissions:
+```bash
+sudo sed -i 's/NVCCFLAGS="-O3 -arch compute_30"/NVCCFLAGS="-O3 -arch compute_89"/g' configure
+```
+
+- Next install
+```bash
+./configure --prefix=/usr/local/beagle
+make
+sudo make install
+```
+
+- Configure environment variables
+```bash
+echo "# <<< Beagle-lib-3.1.2 >>> #" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/beagle/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+echo "export PKG_CONFIG_PATH=/usr/local/beagle/lib/pkgconfig:$PKG_CONFIG_PATH" >> ~/.bashrc
+```
+
+### 2.4 Install Openmpi
+- The installation of openmpi is relatively simple. You can install it in the following order.
+```bash
+wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.5.tar.gz
+tar -xzvf openmpi-4.1.5.tar.gz
+cd openmpi-4.1.5/
+./configure --prefix=/usr/local/openmpi
+make
+sudo make install
+echo "# <<< Openmpi-4.1.5 >>> #" >> ~/.bashrc
+echo "export PATH=/usr/local/openmpi/bin:$PATH" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/openmpi/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+echo "export MANPATH=/usr/local/openmpi/share/man:$MANPATH" >> ~/.bashrc
+```
+
+- Verify installation, Runs on 4 CPU cores: `mpirun -np 4`
+```bash
+cd openmpi-4.1.5/examples/
+make
+mpirun -np 4 hello_c
+```
+
+- If the following output appears, the verification is successful.
+```
+Hello, world, I am 2 of 4, (Open MPI v4.1.5, package: Open MPI orange@bee Distribution, ident: 4.1.5, repo rev: v4.1.5, Feb 23, 2023, 105)
+Hello, world, I am 3 of 4, (Open MPI v4.1.5, package: Open MPI orange@bee Distribution, ident: 4.1.5, repo rev: v4.1.5, Feb 23, 2023, 105)
+Hello, world, I am 0 of 4, (Open MPI v4.1.5, package: Open MPI orange@bee Distribution, ident: 4.1.5, repo rev: v4.1.5, Feb 23, 2023, 105)
+Hello, world, I am 1 of 4, (Open MPI v4.1.5, package: Open MPI orange@bee Distribution, ident: 4.1.5, repo rev: v4.1.5, Feb 23, 2023, 105)
+```
+
+### 2.5 Install Mrbayes
+- The installation of Mrbayes is as follows
+```bash
+wget https://github.com/NBISweden/MrBayes/releases/download/v3.2.7/mrbayes-3.2.7.tar.gz
+tar -xzvf mrbayes-3.2.7.tar.gz
+cd mrbayes-3.2.7/
+./configure --with-mpi --with-beagle
+make
+sudo make install
+```
+
+- Verify installation, use 4 cores to run mrbayes
+```bash
+mpirun -np 4 mb
+```
+
+- Check out the available beagle libraries
+```
+showbeagle
+```
