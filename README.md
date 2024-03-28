@@ -359,3 +359,42 @@ mpirun -np 4 mb
 ```
 showbeagle
 ```
+
+```
+                            MrBayes 3.2.7 x86_64
+
+                      (Bayesian Analysis of Phylogeny)
+
+                             (Parallel version)
+                         (4 processors available)
+
+              Distributed under the GNU General Public License
+
+
+               Type "help" or "help <command>" for information
+                     on the commands that are available.
+
+                   Type "about" for authorship and general
+                       information about the program.
+
+
+MrBayes > showbeagle
+
+   Available resources reported by beagle library:
+	Resource 0:
+	Name: CPU
+	Flags: PROCESSOR_CPU PRECISION_DOUBLE PRECISION_SINGLE COMPUTATION_SYNCH
+             EIGEN_REAL EIGEN_COMPLEX SCALING_MANUAL SCALING_AUTO
+             SCALING_ALWAYS SCALING_DYNAMIC SCALERS_RAW SCALERS_LOG
+             VECTOR_NONE VECTOR_SSE THREADING_NONE THREADING_CPP
+
+	Resource 1:
+	Name: NVIDIA GeForce RTX 4060 Laptop GPU
+	Desc: Global memory (MB): 7915 | Clock speed (Ghz): 1.89 | Number of cores: 3072
+	Flags: PROCESSOR_GPU PRECISION_DOUBLE PRECISION_SINGLE COMPUTATION_ASYNCH
+             COMPUTATION_SYNCH EIGEN_REAL EIGEN_COMPLEX SCALING_MANUAL
+             SCALING_AUTO SCALING_ALWAYS SCALING_DYNAMIC SCALERS_RAW
+             SCALERS_LOG VECTOR_NONE THREADING_NONE
+
+   BEAGLE version: 3.1.2
+```
