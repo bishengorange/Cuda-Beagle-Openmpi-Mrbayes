@@ -37,6 +37,10 @@ Here I will explain how to set up these programs (Cuda, Beagle, Openmpi, Mrbayes
 
 - Other software
 ```bash
+sudo apt-get install gcc cmake build-essential autoconf automake subversion libtool git pkg-config openjdk-11-jdk
+```
+
+```bash
 ubuntu-drivers devices
 ```
 
