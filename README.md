@@ -349,8 +349,8 @@ cd mrbayes-3.2.7/
 make
 sudo make install
 ```
-
-- Verify installation, use 4 cores to run mrbayes
+## 3 Verify installation
+- use 4 cores to run mrbayes
 ```bash
 mpirun -np 4 mb
 ```
